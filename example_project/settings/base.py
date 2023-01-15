@@ -129,7 +129,8 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False  # NOTE: django-timepiece does not currently support timezones.
+# USE_TZ = False  # NOTE: django-timepiece does not currently support timezones.
+USE_TZ = True   #FIXME  SQLite backend does not support timezone-aware datetimes when USE_TZ is False.
 
 WSGI_APPLICATION = 'example_project.wsgi.application'
 

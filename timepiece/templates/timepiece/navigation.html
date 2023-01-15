@@ -23,9 +23,9 @@
                             <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{ user.first_name }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'edit_settings' %}">Settings</a></li>
-                                <li><a href="{% url 'change_password' %}">Change Password</a></li>
+                                <li><a href="{ url 'change_password' }">Change Password</a></li>
                                 <li class="divider"></li>
-                                <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+                                <li><a href="{ url 'auth_logout' }">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -70,7 +70,7 @@
                         <li><a href="{% url 'view_user_timesheet' request.user.pk %}">Time Sheet</a></li>
                         <li><a href="{% url 'view_schedule' %}">Schedule</a></li>
                         <li><a href="{% url 'create_entry' %}">Add Entry</a></li>
-                        <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+                        <li><a href="{ url 'auth_logout' }">Logout</a></li>
                     {% endif %}
                 </ul>
             </div>

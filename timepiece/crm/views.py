@@ -154,7 +154,7 @@ def view_user_timesheet(request, user_id, active_tab):
         ])
 
     return render(request, 'timepiece/user/timesheet/view.html', {
-        'active_tab': active_tab or 'overview',
+        'active_tab': active_tab if active_tab else 'overview',
         'year_month_form': form,
         'from_date': from_date,
         'to_date': to_date - relativedelta(days=1),

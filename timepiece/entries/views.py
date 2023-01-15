@@ -37,8 +37,9 @@ class Dashboard(TemplateView):
     template_name = 'timepiece/dashboard.html'
 
     @method_decorator(login_required)
-    def dispatch(self, request, active_tab, *args, **kwargs):
-        self.active_tab = active_tab or 'progress'
+    def dispatch(self, request, *args, **kwargs):
+        active_tab = kwargs.get('active_tab', 'progress') #FIXME
+        self.active_tab = active_tab if active_tab else 'progress'
         self.user = request.user
         return super(Dashboard, self).dispatch(request, *args, **kwargs)
 
