@@ -4,11 +4,12 @@ from decimal import Decimal
 import random
 from time import sleep
 
-from six.moves.urllib.parse import urlencode
+# from six.moves.urllib.parse import urlencode
+from urllib.parse import quote_plus, quote, urlencode
 
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils import timezone
 from django.test import TestCase
 

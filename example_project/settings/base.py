@@ -7,14 +7,11 @@ PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'timepiece',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_PATH, 'db.sqlite3'),
+    }
 }
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -33,7 +30,7 @@ INSTALLED_APPS = [
     'timepiece.entries',
     'timepiece.reports',
 
-    'bootstrap_toolkit',
+    # 'bootstrap_toolkit',
     'compressor',
     'selectable',
 ]
@@ -68,12 +65,15 @@ MEDIA_ROOT = os.path.join(PROJECT_PATH, 'public', 'media')
 
 MEDIA_URL = '/media/'
 
-MIDDLEWARE_CLASSES = [
-    'django.middleware.common.CommonMiddleware',
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'example_project.urls'
@@ -83,38 +83,43 @@ SECRET_KEY = 'oap0ahyb%_iitq1un(4j!#v81_%6jl$wefeh@$^=metg6w8pr^'
 SITE_ID = 1
 
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'public', 'static')
-
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = []
-
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 ]
 
-TEMPLATE_CONTEXT_PROCESSORS = [
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.request',
-    'timepiece.context_processors.quick_search',
-    'timepiece.context_processors.quick_clock_in',
-    'timepiece.context_processors.extra_settings',
-]
-
-TEMPLATE_DIRS = [
-    os.path.join(PROJECT_PATH, 'templates'),
-]
-
-TEMPLATE_LOADERS = [
+TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
+)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(PROJECT_PATH, 'timepiece', 'templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                # 'django.template.context_processors.csrf',      # security enhance TODO
+                'django.contrib.messages.context_processors.messages',
+
+                'timepiece.context_processors.quick_search',
+                'timepiece.context_processors.quick_clock_in',
+                'timepiece.context_processors.extra_settings',
+            ],
+        },
+    },
 ]
+
+
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 

@@ -9,13 +9,13 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import F, Q, Sum, Max, Min
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
+# from django.utils.encoding import python_2_unicode_compatible
 
 from timepiece import utils
 from timepiece.crm.models import Project
 
 
-@python_2_unicode_compatible
+
 class Activity(models.Model):
     """
     Represents different types of activity: debugging, developing,
@@ -38,7 +38,7 @@ class Activity(models.Model):
         verbose_name_plural = 'activities'
 
 
-@python_2_unicode_compatible
+
 class ActivityGroup(models.Model):
     """Activities that are allowed for a project"""
     name = models.CharField(max_length=255, unique=True)
@@ -51,7 +51,7 @@ class ActivityGroup(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
+
 class Location(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = models.CharField(max_length=255, unique=True)
@@ -154,7 +154,6 @@ class EntryWorkedManager(models.Manager):
         return qs.exclude(project__in=projects.values())
 
 
-@python_2_unicode_compatible
 class Entry(models.Model):
     """
     This class is where all of the time logs are taken care of
@@ -172,10 +171,10 @@ class Entry(models.Model):
         (NOT_INVOICED, 'Not Invoiced'),
     ))
 
-    user = models.ForeignKey(User, related_name='timepiece_entries')
-    project = models.ForeignKey('crm.Project', related_name='entries')
-    activity = models.ForeignKey(Activity, related_name='entries')
-    location = models.ForeignKey(Location, related_name='entries')
+    user = models.ForeignKey(User, related_name='timepiece_entries', on_delete=models.PROTECT)
+    project = models.ForeignKey('crm.Project', related_name='entries', on_delete=models.PROTECT)
+    activity = models.ForeignKey(Activity, related_name='entries', on_delete=models.PROTECT)
+    location = models.ForeignKey(Location, related_name='entries', on_delete=models.PROTECT)
     entry_group = models.ForeignKey(
         'contracts.EntryGroup', blank=True, null=True, related_name='entries',
         on_delete=models.SET_NULL)
@@ -520,11 +519,11 @@ class Entry(models.Model):
         return data
 
 
-@python_2_unicode_compatible
+
 class ProjectHours(models.Model):
     week_start = models.DateField(verbose_name='start of week')
-    project = models.ForeignKey('crm.Project')
-    user = models.ForeignKey(User)
+    project = models.ForeignKey('crm.Project', on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     hours = models.DecimalField(
         max_digits=11, decimal_places=5, default=0,
         validators=[validators.MinValueValidator(Decimal("0.00001"))])

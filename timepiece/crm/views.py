@@ -1,12 +1,13 @@
 import datetime
 from dateutil.relativedelta import relativedelta
 
-from six.moves.urllib.parse import urlencode
+# from six.moves.urllib.parse import urlencode
+from urllib.parse import quote_plus, quote, urlencode
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.db import transaction
 from django.db.models import Sum
 from django.http import HttpResponseRedirect, HttpResponseForbidden, Http404

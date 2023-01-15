@@ -1,9 +1,10 @@
-from six.moves.urllib.parse import parse_qs, urlparse
-from six.moves.urllib.parse import urlencode
+# from six.moves.urllib.parse import parse_qs, urlparse
+# from six.moves.urllib.parse import urlencode
+from urllib.parse import quote_plus, quote, urlencode, parse_qs, urlparse
 
 from dateutil.relativedelta import relativedelta
 
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth import login
 from django.http import HttpRequest

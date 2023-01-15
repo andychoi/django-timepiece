@@ -1,43 +1,43 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 from timepiece.contracts import views
 
 
 urlpatterns = [
     # Contracts
-    url(r'^contract/$',
+    re_path(r'^contract/$',
         views.ContractList.as_view(),
         name='list_contracts'),
-    url(r'^contract/(?P<contract_id>\d+)/$',
+    re_path(r'^contract/(?P<contract_id>\d+)/$',
         views.ContractDetail.as_view(),
         name='view_contract'),
 
     # Invoices
-    url(r'invoice/$',
+    re_path(r'invoice/$',
         views.ListInvoices.as_view(),
         name='list_invoices'),
-    url(r'invoice/outstanding/$',
+    re_path(r'invoice/outstanding/$',
         views.list_outstanding_invoices,
         name='list_outstanding_invoices'),
-    url(r'invoice/create/$',
+    re_path(r'invoice/create/$',
         views.create_invoice,
         name='create_invoice'),
-    url(r'invoice/(?P<invoice_id>\d+)/$',
+    re_path(r'invoice/(?P<invoice_id>\d+)/$',
         views.InvoiceDetail.as_view(),
         name='view_invoice'),
-    url(r'invoice/(?P<invoice_id>\d+)/csv/$',
+    re_path(r'invoice/(?P<invoice_id>\d+)/csv/$',
         views.InvoiceDetailCSV.as_view(),
         name='view_invoice_csv'),
-    url(r'invoice/(?P<invoice_id>\d+)/entries/$',
+    re_path(r'invoice/(?P<invoice_id>\d+)/entries/$',
         views.InvoiceEntriesDetail.as_view(),
         name='view_invoice_entries'),
-    url(r'invoice/(?P<invoice_id>\d+)/entries/(?P<entry_id>\d+)/remove/$',
+    re_path(r'invoice/(?P<invoice_id>\d+)/entries/(?P<entry_id>\d+)/remove/$',
         views.delete_invoice_entry,
         name='delete_invoice_entry'),
-    url(r'invoice/(?P<invoice_id>\d+)/edit/$',
+    re_path(r'invoice/(?P<invoice_id>\d+)/edit/$',
         views.InvoiceEdit.as_view(),
         name='edit_invoice'),
-    url(r'invoice/(?P<invoice_id>\d+)/delete/$',
+    re_path(r'invoice/(?P<invoice_id>\d+)/delete/$',
         views.InvoiceDelete.as_view(),
         name='delete_invoice'),
 ]
